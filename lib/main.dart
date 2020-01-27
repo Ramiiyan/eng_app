@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // _audioCard(),
           RPlayer(
             audioTitle: "Title 1",
-            audioUrl: "https://www2.iis.fraunhofer.de/AAC/ChID-BLITS-EBU-Narration441-16b.wav",
+            audioUrl: "https://www2.iis.fraunhofer.de/AAC/ChID-BLITS-EBU-Narration441-16b.wav"
           ),
           // _audioplayer(_player),
           // _audioCard(_player2),

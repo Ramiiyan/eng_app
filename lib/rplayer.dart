@@ -92,7 +92,13 @@ class _PlayerState extends State<RPlayer> {
                       if (position > duration) {
                         position = duration;
                       }
-                      return _seekbar(duration, position);
+                      return _seekbar(
+                        duration, 
+                        position,
+                        (newPosition) {
+                          _player.seek(newPosition);
+                        }
+                      );
                     },
                   );
                 },
@@ -134,7 +140,7 @@ class _PlayerState extends State<RPlayer> {
       // ),
   }
 
-  Widget _seekbar(Duration duration, Duration position){
+  Widget _seekbar(Duration duration, Duration position,ValueChanged<Duration> onChangeEnd){
     return SliderTheme(
       data: SliderThemeData(
         thumbShape: RoundSliderThumbShape(enabledThumbRadius: 4),
