@@ -99,7 +99,7 @@ class _PlayerState extends State<RPlayer> {
       );
     else if (state == AudioPlaybackState.buffering || state == AudioPlaybackState.connecting)
       return Container(
-        margin: EdgeInsets.all(4.0),
+        margin: EdgeInsets.all(2.0),
         width: 38.0,
         height: 38.0,
         child: CircularProgressIndicator(),

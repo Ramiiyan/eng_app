@@ -20,7 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
   just_audio: ^0.0.6
-  connectivity: ^0.4.6+2
+  connection_status_bar: ^1.1.2
   rxdart: ^0.23.1
   http: ^0.12.0+4
   percent_indicator: ^2.1.1+1

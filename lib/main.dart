@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:connectivity/connectivity.dart';
+import 'package:connection_status_bar/connection_status_bar.dart';
 import 'package:eng_app/rplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -31,16 +31,18 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
   
   // final _volumeSubject = BehaviorSubject.seeded(1.0);
   // final _speedSubject = BehaviorSubject.seeded(1.0);
   // AudioPlayer _player, _player2, _player3;
+
   var url = "https://absolutezerolabs.com/api/v1/lessons/1";
   
   @override
   void initState() {
     super.initState();
+
   //   _player = AudioPlayer();
   //   _player2 = AudioPlayer();
   //   _player3 = AudioPlayer();
@@ -50,11 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //   // _player3.setUrl("https://absolutezerolabs.com/storage/H0OlYKonkIccUKjatQ0U.mp3");
   
   //   response();
-    internetAvailable().then((available){
-      if(!available || available == null){
-
-      }
-    });
+     
   }
   
   // @override
@@ -73,7 +71,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: ListView(
         children: <Widget>[
-          // _audioCard(),
           RPlayer(
             audioTitle: "Title 1",
             audioUrl: "https://www2.iis.fraunhofer.de/AAC/ChID-BLITS-EBU-Narration441-16b.wav"
@@ -86,14 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future<bool> internetAvailable() async {
-    var connectivity = await (Connectivity().checkConnectivity());
-    if(connectivity == ConnectivityResult.mobile || connectivity == ConnectivityResult.wifi) {
-      return true;
-    }else {
-      return false;
-    }
-  }
+  
 
 
 
