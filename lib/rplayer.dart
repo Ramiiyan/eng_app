@@ -1,4 +1,5 @@
 
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -30,10 +31,10 @@ class _PlayerState extends State<RPlayer> {
   
   @override
   void initState(){
+
     super.initState();
     _player = AudioPlayer();
-    _player.setUrl(widget.audioUrl);
-
+    connect();
   }
   @override
   void dispose(){
@@ -89,26 +90,38 @@ class _PlayerState extends State<RPlayer> {
       },
     );
   }
-  Widget _playOrPause( AudioPlaybackState state, AudioPlayer _player){
-    if (state == AudioPlaybackState.playing)
+  Widget _playOrPause( AudioPlaybackState state, AudioPlayer _player) {
+    if (state == AudioPlaybackState.playing) {
       return IconButton(
         icon: Icon(Icons.pause_circle_outline),
         iconSize: 40.0,
         color: Colors.blue,
-        onPressed: _player.pause,
+        onPressed: () async => await _player.pause(),
       );
-    else if (state == AudioPlaybackState.buffering || state == AudioPlaybackState.connecting)
+    } else if (state == AudioPlaybackState.buffering){ 
+      print("buffering..");
+      connect();
       return Container(
         margin: EdgeInsets.all(2.0),
         width: 38.0,
         height: 38.0,
         child: CircularProgressIndicator(),
       );
-    else                      
+    }else if(state == AudioPlaybackState.connecting){
+      print("connecting...");
+      connect();
+      return Container(
+        margin: EdgeInsets.all(2.0),
+        width: 38.0,
+        height: 38.0,
+        child: CircularProgressIndicator(),
+      );
+      
+    }else
       return IconButton(
         icon: Icon(Icons.play_circle_outline),
         iconSize: 40.0,
-        onPressed: _player.play,
+        onPressed: () async => await _player.play(),
       );
       // IconButton(
       //   icon: Icon(Icons.stop),
@@ -119,6 +132,7 @@ class _PlayerState extends State<RPlayer> {
       //       : _player.stop,
       // ),
   }
+
 
   Widget _seekbar(Duration duration, Duration position,ValueChanged<Duration> onChangeEnd){
     return SliderTheme(
@@ -145,6 +159,25 @@ class _PlayerState extends State<RPlayer> {
         },
       ),
     );
+  }
+   Future<bool> internetAvailable() async {
+    var connectivity = await (Connectivity().checkConnectivity());
+    if(connectivity == ConnectivityResult.mobile || connectivity == ConnectivityResult.wifi) {
+      return true;
+    }else {
+      return false;
+    }
+  }
+  void connect(){
+    internetAvailable().then((internet){
+      if(internet !=null  && internet){
+        // _player = AudioPlayer();
+        _player.setUrl(widget.audioUrl);
+      } else{
+        print("not connected.");
+        connect();
+      }
+    });
   }
   //volume, speed adjust
         // Text("Volume"),
