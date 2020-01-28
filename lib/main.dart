@@ -1,8 +1,9 @@
 import 'dart:convert';
 
+import 'package:connectivity/connectivity.dart';
 import 'package:eng_app/rplayer.dart';
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:http/http.dart' as http;
 
 void main() => runApp(MyApp());
@@ -37,9 +38,9 @@ class _MyHomePageState extends State<MyHomePage> {
   // AudioPlayer _player, _player2, _player3;
   var url = "https://absolutezerolabs.com/api/v1/lessons/1";
   
-  // @override
-  // void initState() {
-  //   super.initState();
+  @override
+  void initState() {
+    super.initState();
   //   _player = AudioPlayer();
   //   _player2 = AudioPlayer();
   //   _player3 = AudioPlayer();
@@ -49,8 +50,12 @@ class _MyHomePageState extends State<MyHomePage> {
   //   // _player3.setUrl("https://absolutezerolabs.com/storage/H0OlYKonkIccUKjatQ0U.mp3");
   
   //   response();
+    internetAvailable().then((available){
+      if(!available || available == null){
 
-  // }
+      }
+    });
+  }
   
   // @override
   // void dispose() {
@@ -80,4 +85,17 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
+  Future<bool> internetAvailable() async {
+    var connectivity = await (Connectivity().checkConnectivity());
+    if(connectivity == ConnectivityResult.mobile || connectivity == ConnectivityResult.wifi) {
+      return true;
+    }else {
+      return false;
+    }
+  }
+
+
+
+  
 }

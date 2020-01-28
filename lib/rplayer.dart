@@ -45,29 +45,8 @@ class _PlayerState extends State<RPlayer> {
   @override
   Widget build(BuildContext context) {
     return _audioCard();
-    // return SliderTheme(
-    //   data: SliderThemeData(
-    //     thumbShape: RoundSliderThumbShape(enabledThumbRadius: 5),
-    //   ),
-    //   child: Slider(
-    //     min: 0.0,
-    //     max: widget.duration.inMilliseconds.toDouble(),
-    //     value: _dragValue ?? widget.position.inMilliseconds.toDouble(),
-    //     onChanged: (value) {
-    //       setState(() { _dragValue = value; });
-    //       if (widget.onChanged != null) {
-    //         widget.onChanged(Duration(milliseconds: value.round()));
-    //       }
-    //     },
-    //     onChangeEnd: (value) {
-    //       _dragValue = null;
-    //       if (widget.onChangeEnd != null) {
-    //         widget.onChangeEnd(Duration(milliseconds: value.round()));
-    //       }
-    //     },
-    //   ),
-    // ); 
   }
+
   Widget _audioCard(){
     return  StreamBuilder<AudioPlaybackState>(
       stream: _player.playbackStateStream,
@@ -79,6 +58,7 @@ class _PlayerState extends State<RPlayer> {
             child:ListTile( 
                leading: _playOrPause(state,_player),
               title: Text(widget.audioTitle,
+                textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 22.0),
               ),
               subtitle: StreamBuilder<Duration>(
